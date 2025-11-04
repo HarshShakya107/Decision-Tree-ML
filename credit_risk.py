@@ -1,4 +1,6 @@
-
+import streamlit as st
+import pandas as pd
+import pickle
 with open('credit_risk_model.pkl', 'rb') as file:
     model = pickle.load(file)
 
@@ -78,4 +80,5 @@ if st.button("🔍 Predict Credit Risk"):
     st.markdown("---")
     st.subheader("📊 Model Input Summary")
     st.dataframe(input_df)
+
 
