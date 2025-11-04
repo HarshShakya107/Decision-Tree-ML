@@ -3,6 +3,8 @@ import pandas as pd
 import pickle
 with open('credit_risk_model.pkl', 'rb') as file:
     model = pickle.load(file)
+    
+joblib.dump(model, "models/credit_risk_model.joblib")
 
 st.set_page_config(page_title="Credit Risk Predictor", page_icon="💰", layout="centered")
 
@@ -80,5 +82,6 @@ if st.button("🔍 Predict Credit Risk"):
     st.markdown("---")
     st.subheader("📊 Model Input Summary")
     st.dataframe(input_df)
+
 
 
