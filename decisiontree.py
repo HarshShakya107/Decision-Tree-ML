@@ -1,0 +1,66 @@
+
+import pandas as pd
+
+df=pd.read_csv("/content/credit_risk_dataset.csv")
+
+df.head()
+
+df.columns
+
+df=pd.get_dummies(df,drop_first=True,dtype=int)
+
+df.head()
+
+x=df.drop('loan_status',axis=1)
+
+y=df['loan_status']
+
+from sklearn.model_selection import train_test_split
+x_train,x_test,y_train,y_test=train_test_split(x,y,test_size=0.2,random_state=50)
+
+from sklearn.tree import DecisionTreeClassifier,plot_tree
+
+clf=DecisionTreeClassifier(
+    criterion='entropy',
+    max_depth=16,
+    random_state=50)
+
+clf.fit(x_train,y_train)
+
+y_pred=clf.predict(x_test)
+
+from sklearn.metrics import classification_report,confusion_matrix,accuracy_score
+
+print(classification_report(y_test,y_pred))
+
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+sns.heatmap(confusion_matrix(y_test,y_pred),annot=True,fmt='g')
+plt.title("Credit Risk")
+plt.xlabel("Predicted")
+plt.ylabel("Actual")
+plt.show()
+
+accuracy_score(y_test,y_pred)
+
+plt.figure(figsize=(20,10))
+plot_tree(
+    clf,
+    feature_names=x.columns,
+    class_names=['Good Loan', 'Bad Loan'],
+    filled=True,
+    rounded=True,
+    fontsize=9,
+    max_depth=4,
+    impurity=False,
+    proportion=True)
+plt.show()
+
+import pickle
+
+with open('credit_risk_model.pkl', 'wb') as file:
+    pickle.dump(clf, file)
+
+
+
