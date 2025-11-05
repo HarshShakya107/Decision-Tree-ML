@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 import pickle
 import joblib
-with open('credit_risk_model.pkl', 'rb') as file:
+with open('credit_risk_model', 'rb') as file:
     model = pickle.load(file)
     
 joblib.dump(model, "credit_risk_model.joblib")
@@ -83,6 +83,7 @@ if st.button("🔍 Predict Credit Risk"):
     st.markdown("---")
     st.subheader("📊 Model Input Summary")
     st.dataframe(input_df)
+
 
 
 
